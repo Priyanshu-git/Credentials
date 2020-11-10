@@ -24,7 +24,7 @@
             android:layout_marginTop="16dp"
             android:autofillHints="@string/string_name"
             android:ems="10"
-            android:hint="@string/string_name"
+            android:hint="@string/string_webname"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

@@ -6,6 +6,7 @@
     <string name="string_add_entry">Add Entry</string>
     <string name="string_delete_account">Delete Account</string>
     <string name="string_name">Name</string>
+    <string name="string_webname">Name of website</string>
     <string name="string_email">E-mail</string>
     <string name="string_uid">Unique ID</string>
     <string name="string_null">Null</string>
