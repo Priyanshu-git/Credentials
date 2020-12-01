@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Credentials">
-        <activity android:name=".AddEntryActivity"
+        <activity
+            android:name=".AddEntryActivity"
             android:label="@string/string_add_entry"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".MyProfile"

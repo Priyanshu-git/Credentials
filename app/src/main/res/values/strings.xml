@@ -12,7 +12,8 @@
     <string name="string_null">Null</string>
     <string name="string_url">URL</string>
     <string name="string_password">Password</string>
-    <string name="string_add">Add!</string>
+    <string name="string_add">Add</string>
     <string name="string_refresh">Refresh</string>
+    <string name="string_dummy">XXXXX</string>
 
 </resources>

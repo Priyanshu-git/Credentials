@@ -2,7 +2,8 @@ package com.example.credentials;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,7 +25,7 @@ public class AddEntryActivity extends AppCompatActivity {
 
     private EditText name, url, pass;
     private FirebaseFirestore db;
-    final String KEY_NAME="NAME",KEY_URL="URL",KEY_PASS="PASS";
+    final String KEY_NAME = "NAME", KEY_URL = "URL", KEY_PASS = "PASS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class AddEntryActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.t_bar);
         setSupportActionBar(toolbar);
-        ActionBar ab=getSupportActionBar();
+        ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
         name = findViewById(R.id.editTextName);
@@ -41,15 +42,14 @@ public class AddEntryActivity extends AppCompatActivity {
         pass = findViewById(R.id.editTextPassword);
 
         db = FirebaseFirestore.getInstance();
-
     }
 
-    public void addEntry(View view) {
+    public void addEntry() {
         String input_name = name.getText().toString();
         String input_url = url.getText().toString();
         String input_pass = pass.getText().toString();
 
-        String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         HashMap<String, Object> data = new HashMap<>();
         data.put(KEY_NAME, input_name);
@@ -62,6 +62,7 @@ public class AddEntryActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        documentReference.update("DOC_ID", documentReference.getId());
                         Toast.makeText(AddEntryActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
                         name.setText("");
                         pass.setText("");
@@ -75,5 +76,22 @@ public class AddEntryActivity extends AppCompatActivity {
                         Toast.makeText(AddEntryActivity.this, "Adding Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_new_entry, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.fireb_add) {
+            addEntry();
+        }
+        else
+            onBackPressed();
+        return true;
     }
 }
