@@ -51,7 +51,7 @@ public class MyProfile extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
-            startActivity(new Intent(MyProfile.this, LoginActivity.class));
+            startActivity(new Intent(MyProfile.this, WelcomeActivity.class));
             finish();
         }
 
@@ -130,7 +130,7 @@ public class MyProfile extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(getApplicationContext(), "Deletion Successful", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(MyProfile.this, LoginActivity.class));
+                                startActivity(new Intent(MyProfile.this, WelcomeActivity.class));
                                 finish();
                                 MainActivity.fa.finish();
                             }

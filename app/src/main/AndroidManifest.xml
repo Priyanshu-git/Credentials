@@ -13,7 +13,9 @@
             android:name=".AddEntryActivity"
             android:label="@string/string_add_entry"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".MyProfile"
             android:label="@string/string_my_profile"
