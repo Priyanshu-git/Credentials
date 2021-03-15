@@ -81,9 +81,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             case R.id.nav_myprofile:
                 startActivity(new Intent(this,MyProfile.class));
                 return true;
-            case R.id.nav_add_entry:
-                startActivity(new Intent(this,AddEntryActivity.class));
-                return true;
             default:
                 fragment = new MainFragment();
         }
