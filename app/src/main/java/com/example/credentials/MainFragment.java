@@ -5,20 +5,18 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -38,36 +36,38 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Vector;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+
+public class MainFragment extends Fragment {
+    View root;
+    private static final String TAG = "MainFragment";
 
     private FirebaseUser mFirebaseUser = null;
     private FirebaseFirestore db;
     private static CollectionReference coll;
     static Vector<String> entry_id = new Vector<>();
-    public static Activity fa;
+    public static Activity activityContext;
 
     private RecyclerView recyclerView;
     private FirestoreRecyclerAdapter<Entry, EntryHolder> adapter;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        fa = this;
-        setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
         coll = db.collection(mFirebaseUser.getUid());
+        activityContext =DrawerActivity.fa;
+    }
 
-        recyclerView = findViewById(R.id.recyclerView2);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        root= inflater.inflate(R.layout.fragment_main, container, false);
+
+        recyclerView = root.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(DrawerActivity.fa));
         Query query = FirebaseFirestore.getInstance().collection(mFirebaseUser.getUid());
 
         coll.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -101,26 +101,27 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         recyclerView.setAdapter(adapter);
+        return root;
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (mFirebaseUser == null) {
-            startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
-            finish();
+            startActivity(new Intent(DrawerActivity.fa, WelcomeActivity.class));
+            activityContext.finish();
         }
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         adapter.startListening();
         coll.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
-                    Toast.makeText(MainActivity.this, "Error while loading", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DrawerActivity.fa, "Error while loading", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onEvent: " + error.toString());
                     return;
                 }
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
 
         if (adapter != null) {
@@ -137,47 +138,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public void onBackPressed() {
-        finish();
+        activityContext.finish();
     }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.opt_my_profile:
-                startActivity(new Intent(this, MyProfile.class));
-                break;
-            case R.id.opt_sign_out:
-                signOut();
-                break;
-            case R.id.opt_add:
-                startActivity(new Intent(getApplicationContext(), AddEntryActivity.class));
-                break;
-        }
-        return true;
-    }
-
 
     private void signOut() {
         AuthUI.getInstance()
-                .signOut(this).addOnFailureListener(new OnFailureListener() {
+                .signOut(activityContext).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Sign Out Failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(activityContext.getApplicationContext(), "Sign Out Failed", Toast.LENGTH_LONG).show();
             }
         })
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getApplicationContext(), "Signed Out", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
-                        finish();
+                        Toast.makeText(activityContext.getApplicationContext(), "Signed Out", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(activityContext, WelcomeActivity.class));
+                        activityContext.finish();
                     }
                 });
     }

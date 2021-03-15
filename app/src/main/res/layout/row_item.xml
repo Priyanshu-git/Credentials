@@ -40,7 +40,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginBottom="4dp"
             android:text="@string/string_dummy"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout

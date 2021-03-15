@@ -18,21 +18,44 @@
 
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
-    <string name="start">GOT IT</string>
+    <string name="start">SIGN IN</string>
 
-    <string name="slide_1_title">Hello Food!</string>
-    <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!</string>
+    <string name="slide_1_title">Welcome!</string>
+    <string name="slide_1_desc">The easiest way to remember your most complex passwords!</string>
 
-    <string name="slide_2_title">Movie Tickets</string>
-    <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
+    <string name="slide_2_title">Fire-based</string>
+    <string name="slide_2_desc">This app uses Firestore database from Google to store your passwords!</string>
 
-    <string name="slide_3_title">Great Discounts</string>
-    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
+    <string name="slide_3_title">Password Generator</string>
+    <string name="slide_3_desc">Generate Super-Secure passwords that are hard to crack!</string>
 
-    <string name="slide_4_title">World Travel</string>
-    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
+    <string name="slide_4_title">Web Version Coming Soon</string>
+    <string name="slide_4_desc">Access your CREDENTIALS just using a web browser!</string>
 
-    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
-    <string name="play_again">Play Again</string>
+
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_password_generator">Password Generator</string>
+    <string name="menu_profile">My Profile</string>
+    <string name="menu_add_entry">Add Entry</string>
+
+
+    <string name="nav_open_drawer">Open navigation drawer</string>
+    <string name="nav_close_drawer">Close navigation drawer</string>
+
+    <string name="requirement">Select your password requirements</string>
+    <string name="string_opt_length">Length of password (Min: 6)</string>
+    <string name="string_opt_caps">Capital Letters (A–Z)</string>
+    <string name="string_opt_small">Small Letters (a–z)</string>
+    <string name="string_opt_symbol">Special Characters (Symbols)</string>
+    <string name="string_opt_digit">Number Digits (0–9)</string>
+    <string name="string_generate">GENERATE</string>
+    <string name="string_copy">Copy to Clipboard</string>
 
 </resources>
