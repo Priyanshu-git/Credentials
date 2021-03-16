@@ -1,10 +1,12 @@
 package com.example.credentials;
 
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class EntryHolder extends RecyclerView.ViewHolder {
@@ -24,9 +26,13 @@ public class EntryHolder extends RecyclerView.ViewHolder {
     public void setPASS(String PASS) {
         password = PASS;
         Button vis = view.findViewById(R.id.btn_visible);
-        vis.setTooltipText("Show/Hide Password");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vis.setTooltipText("Show/Hide Password");
+        }
         Button del = view.findViewById(R.id.btn_delete_entry);
-        del.setTooltipText("Delete this Entry");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            del.setTooltipText("Delete this Entry");
+        }
         TextView t = view.findViewById(R.id.row_pass);
         vis.setOnClickListener(v1 -> {
             if ("XXXXX".contentEquals(t.getText()))
@@ -46,7 +52,7 @@ public class EntryHolder extends RecyclerView.ViewHolder {
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.delete(doc_id);
+                DrawerActivity.delete(doc_id);
             }
         });
     }

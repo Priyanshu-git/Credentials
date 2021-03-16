@@ -227,14 +227,6 @@ public class WelcomeActivity extends AppCompatActivity {
         }
     }
 
-
-    protected void spiderman() {
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
