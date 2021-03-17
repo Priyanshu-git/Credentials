@@ -29,8 +29,8 @@
     <string name="slide_3_title">Password Generator</string>
     <string name="slide_3_desc">Generate Super-Secure passwords that are hard to crack!</string>
 
-    <string name="slide_4_title">Web Version Coming Soon</string>
-    <string name="slide_4_desc">Access your CREDENTIALS just using a web browser!</string>
+    <string name="slide_4_title">Warning</string>
+    <string name="slide_4_desc">This app is meant only for testing and development process. Please do not store your actual passwords as the developer can see them.</string>
 
 
     <string name="title_activity_drawer">DrawerActivity</string>
