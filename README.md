@@ -13,10 +13,6 @@ The app uses Google's Firebase Firestore API to store and retrieve the stored pa
 
 It uses Firebae Auth UI to login to each user's respective user-accounts and then retrieve the data.
 
-* A user-friendly Password Manager app that stores and displays passwords and its site
-* Uses Firebase Firestore to store and retrieve data
-* Firebase Auth UI is used to login into respective user accounts
-* Has an inbuilt user-friendly Password Generator to generate secure passwords
 
 #
 
