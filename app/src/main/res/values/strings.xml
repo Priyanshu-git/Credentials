@@ -6,11 +6,11 @@
     <string name="string_add_entry">Add Entry</string>
     <string name="string_delete_account">Delete Account</string>
     <string name="string_name">Name</string>
-    <string name="string_webname">Name of website</string>
+    <string name="string_website">Website</string>
     <string name="string_email">E-mail</string>
     <string name="string_uid">Unique ID</string>
     <string name="string_null">Null</string>
-    <string name="string_url">URL</string>
+    <string name="string_username">Username</string>
     <string name="string_password">Password</string>
     <string name="string_add">Add</string>
     <string name="string_refresh">Refresh</string>
