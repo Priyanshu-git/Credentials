@@ -1,4 +1,4 @@
-package com.example.credentials;
+package com.example.credentials.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,7 +19,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
+import com.example.credentials.R;
+import com.example.credentials.data.PrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -33,13 +34,12 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     private DrawerLayout drawer;
     Fragment currentFragment = null;
     private static CollectionReference coll;
-    static Activity fa;
+    PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
-        fa = this;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,10 +66,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         ft.replace(R.id.content_frame, currentFragment);
         ft.commit();
 
-        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        coll = db.collection(mFirebaseUser.getUid());
     }
 
     @Override
@@ -114,30 +110,5 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             drawer.closeDrawer(GravityCompat.START);
         else
             super.onBackPressed();
-    }
-
-    public static void delete(String doc_id) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(DrawerActivity.fa);
-        builder.setTitle("Confirm Delete?").setMessage("Do you want to delete this entry?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        coll.document(doc_id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(DrawerActivity.fa, "Entry Deleted", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(DrawerActivity.fa, "Error. Please try again", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                })
-                .setNegativeButton("No", (dialog, which) -> dialog.cancel());
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 }

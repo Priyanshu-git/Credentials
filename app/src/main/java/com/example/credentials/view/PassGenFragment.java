@@ -1,4 +1,4 @@
-package com.example.credentials;
+package com.example.credentials.view;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.credentials.R;
+import com.example.credentials.util.PasswordGen;
 
 public class PassGenFragment extends Fragment {
     private View root;
@@ -32,8 +35,6 @@ public class PassGenFragment extends Fragment {
         d = root.findViewById(R.id.cb_nums);
         sy = root.findViewById(R.id.cb_symbols);
 
-        PasswordGen gen = new PasswordGen();
-
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,12 +44,12 @@ public class PassGenFragment extends Fragment {
                 int l;
                 String s = input_length.getText().toString();
                 if (s.length() < 1) {
-                    Toast.makeText(DrawerActivity.fa, "Enter length of password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Enter length of password", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     l =Integer.parseInt(s);
                     if (l<6){
-                        Toast.makeText(DrawerActivity.fa, "Length must be >= 6", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Length must be >= 6", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
@@ -58,9 +59,9 @@ public class PassGenFragment extends Fragment {
                 cb4 = sy.isChecked();
 
                 if (!cb1 & !cb2 & !cb3 & !cb4) {
-                    Toast.makeText(DrawerActivity.fa, "Select at least 1 option", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Select at least 1 option", Toast.LENGTH_LONG).show();
                 } else {
-                    String pwd = gen.generate(l, cb1, cb2, cb3, cb4);
+                    String pwd = PasswordGen.generate(l, cb1, cb2, cb3, cb4);
                     output.setText(pwd);
                 }
             }
@@ -75,7 +76,7 @@ public class PassGenFragment extends Fragment {
                     ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                     ClipData clip = ClipData.newPlainText("Password", str);
                     clipboard.setPrimaryClip(clip);
-                    Toast.makeText(DrawerActivity.fa, "Password copied to clipboard", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Password copied to clipboard", Toast.LENGTH_SHORT).show();
                 }
             }
         });

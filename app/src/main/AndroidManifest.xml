@@ -9,28 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Credentials">
-        <activity android:name=".DrawerActivity"></activity>
+        <activity android:name=".view.DrawerActivity"></activity>
         <activity
-            android:name=".AddEntryActivity"
+            android:name=".view.AddEntryActivity"
             android:label="@string/string_add_entry"
-            android:parentActivityName=".DrawerActivity" />
+            android:parentActivityName=".view.DrawerActivity" />
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".view.WelcomeActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".MyProfile"
+            android:name=".view.MyProfile"
             android:label="@string/string_my_profile"
-            android:parentActivityName=".DrawerActivity" />
+            android:parentActivityName=".view.DrawerActivity" />
         <activity
-            android:name=".SplashScreen"
-            android:theme="@style/SplashTheme">
+            android:name=".view.SplashScreen"
+            android:theme="@style/SplashTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

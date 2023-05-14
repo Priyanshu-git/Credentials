@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="end"
-    tools:context=".MainFragment">
+    tools:context=".view.MainFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -20,20 +20,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
+            android:id="@+id/failure_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:foregroundGravity="fill"
-                android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
+                android:gravity="center"
+                android:text="No Data Found"
+                android:textSize="30sp"
+                android:visibility="visible" />
 
-        </androidx.cardview.widget.CardView>
+            <Button
+                android:id="@+id/btn_retry"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Tap to Refresh"
+                android:textColor="#2196F3"
+                android:textSize="16sp"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foregroundGravity="fill"
+            android:scrollbars="vertical"
+            android:visibility="gone" />
 
     </LinearLayout>
 

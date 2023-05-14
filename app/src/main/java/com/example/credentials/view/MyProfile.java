@@ -1,4 +1,4 @@
-package com.example.credentials;
+package com.example.credentials.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.credentials.R;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -133,7 +134,6 @@ public class MyProfile extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Deletion Successful", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(MyProfile.this, WelcomeActivity.class));
                                 finish();
-                                MainActivity.fa.finish();
                             }
                         });
 
@@ -154,7 +154,7 @@ public class MyProfile extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(getApplicationContext(), "Signed Out", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(MyProfile.this, WelcomeActivity.class));
-                        DrawerActivity.fa.finish();
+                        getParent().finish();
                         finish();
                     }
                 });

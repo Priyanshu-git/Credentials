@@ -1,15 +1,15 @@
-package com.example.credentials;
+package com.example.credentials.util;
 
 import java.util.ArrayList;
 
 public class PasswordGen {
-    private boolean caps, small, symbols, digits;
+    private static boolean mCaps, mSmall, mSymbols, mDigits;
 
-    String generate(int length,boolean caps,boolean small, boolean digits,boolean symbols) {
-        this.caps=caps;
-        this.digits=digits;
-        this.symbols=symbols;
-        this.small=small;
+    public static String generate(int length, boolean caps, boolean small, boolean digits, boolean symbols) {
+        mCaps =caps;
+        mDigits =digits;
+        mSymbols =symbols;
+        mSmall =small;
 
         ArrayList<String> arr = new ArrayList<>();
         if (caps) {
@@ -39,58 +39,58 @@ public class PasswordGen {
         return pass.toString();
     }
 
-    private String randomCapital() {
+    private static String randomCapital() {
 
         int r = (int) (Math.random() * 100);
         r = r % 26;
         return String.valueOf((char) ('A' + r));
     }
 
-    private String randomSmall() {
+    private static String randomSmall() {
         int r = (int) (Math.random() * 100);
         r = r % 26;
         return String.valueOf((char) ('a' + r));
     }
 
-    private String randomDigit() {
+    private static String randomDigit() {
         int r = (int) (Math.random() * 10);
         r = r % 10;
         return String.valueOf(r);
     }
 
-    private String randomSymbol() {
+    private static String randomSymbol() {
         int r = (int) (Math.random() * 100);
         char arr[] = {'@', '#', '$', '%', '=', ':', '?', '.', '/', '|', '~', '>', '*', '(', ')', '<'};
         r = r % arr.length;
         return String.valueOf(arr[r]);
     }
 
-    private String randomAll(int n) {
+    private static String randomAll(int n) {
         if (n<1) return null;
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < n; ) {
             int r = (int) (Math.random() * 4);
             switch (r) {
                 case 0:
-                    if (caps) {
+                    if (mCaps) {
                         sb.append(randomCapital());
                         i++;
                     }
                     break;
                 case 1:
-                    if (digits) {
+                    if (mDigits) {
                         sb.append(randomDigit());
                         i++;
                     }
                     break;
                 case 2:
-                    if (small) {
+                    if (mSmall) {
                         sb.append(randomSmall());
                         i++;
                     }
                     break;
                 case 3:
-                    if (symbols) {
+                    if (mSymbols) {
                         sb.append(randomSymbol());
                         i++;
                     }

@@ -1,4 +1,4 @@
-package com.example.credentials;
+package com.example.credentials.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
