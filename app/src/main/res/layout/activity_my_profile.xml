@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:text="@string/string_delete_account"
-            android:textColor="@android:color/holo_red_dark"
+            android:backgroundTint="@color/dot_dark_screen1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

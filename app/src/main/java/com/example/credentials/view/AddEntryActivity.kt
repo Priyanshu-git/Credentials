@@ -1,98 +1,76 @@
-package com.example.credentials.view;
+package com.example.credentials.view
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.example.credentials.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import com.example.credentials.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-
-public class AddEntryActivity extends AppCompatActivity {
-    private static final String TAG = "AddEntryActivity";
-
-    private EditText name, url, pass;
-    private FirebaseFirestore db;
-    final String KEY_NAME = "NAME", KEY_URL = "URL", KEY_PASS = "PASS";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_entry);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-
-        name = findViewById(R.id.editTextName);
-        url = findViewById(R.id.editTextURL);
-        pass = findViewById(R.id.editTextPassword);
-
-        db = FirebaseFirestore.getInstance();
+class AddEntryActivity : AppCompatActivity() {
+    private var name: EditText? = null
+    private var url: EditText? = null
+    private var pass: EditText? = null
+    private var db: FirebaseFirestore? = null
+    val KEY_NAME = "NAME"
+    val KEY_URL = "URL"
+    val KEY_PASS = "PASS"
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_add_entry)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        val ab = supportActionBar
+        ab!!.setDisplayHomeAsUpEnabled(true)
+        name = findViewById(R.id.editTextName)
+        url = findViewById(R.id.editTextURL)
+        pass = findViewById(R.id.editTextPassword)
+        db = FirebaseFirestore.getInstance()
     }
 
-    public void addEntry() {
-        String input_name = name.getText().toString();
-        String input_url = url.getText().toString();
-        String input_pass = pass.getText().toString();
-
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        HashMap<String, Object> data = new HashMap<>();
-        data.put(KEY_NAME, input_name);
-        data.put(KEY_URL, input_url);
-        data.put(KEY_PASS, input_pass);
-
-        db.collection(uid)
+    fun addEntry() {
+        val input_name = name!!.text.toString()
+        val input_url = url!!.text.toString()
+        val input_pass = pass!!.text.toString()
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val data = HashMap<String, Any>()
+        data[KEY_NAME] = input_name
+        data[KEY_URL] = input_url
+        data[KEY_PASS] = input_pass
+        db!!.collection(uid)
                 .add(data)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                        documentReference.update("DOC_ID", documentReference.getId());
-                        Toast.makeText(AddEntryActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
-                        name.setText("");
-                        pass.setText("");
-                        url.setText("");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                        Toast.makeText(AddEntryActivity.this, "Adding Failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
+                .addOnSuccessListener { documentReference ->
+                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.id)
+                    documentReference.update("DOC_ID", documentReference.id)
+                    Toast.makeText(this@AddEntryActivity, "Added Successfully", Toast.LENGTH_SHORT).show()
+                    name!!.setText("")
+                    pass!!.setText("")
+                    url!!.setText("")
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
+                    Toast.makeText(this@AddEntryActivity, "Adding Failed", Toast.LENGTH_SHORT).show()
+                }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_new_entry, menu);
-        return super.onCreateOptionsMenu(menu);
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.options_new_entry, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.fireb_add) {
-            addEntry();
-        }
-        else
-            onBackPressed();
-        return true;
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.fireb_add) {
+            addEntry()
+        } else onBackPressed()
+        return true
+    }
+
+    companion object {
+        private const val TAG = "AddEntryActivity"
     }
 }

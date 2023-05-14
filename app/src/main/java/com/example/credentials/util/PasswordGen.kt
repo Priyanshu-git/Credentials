@@ -1,102 +1,94 @@
-package com.example.credentials.util;
+package com.example.credentials.util
 
-import java.util.ArrayList;
-
-public class PasswordGen {
-    private static boolean mCaps, mSmall, mSymbols, mDigits;
-
-    public static String generate(int length, boolean caps, boolean small, boolean digits, boolean symbols) {
-        mCaps =caps;
-        mDigits =digits;
-        mSymbols =symbols;
-        mSmall =small;
-
-        ArrayList<String> arr = new ArrayList<>();
+object PasswordGen {
+    private var mCaps = false
+    private var mSmall = false
+    private var mSymbols = false
+    private var mDigits = false
+    @JvmStatic
+    fun generate(length: Int, caps: Boolean, small: Boolean, digits: Boolean, symbols: Boolean): String {
+        var length = length
+        mCaps = caps
+        mDigits = digits
+        mSymbols = symbols
+        mSmall = small
+        val arr = ArrayList<String?>()
         if (caps) {
-            arr.add(randomCapital());
-            length--;
+            arr.add(randomCapital())
+            length--
         }
-        if (small){
-            arr.add(randomSmall());
-            length--;
+        if (small) {
+            arr.add(randomSmall())
+            length--
         }
         if (symbols) {
-            arr.add(randomSymbol());
-            length--;
+            arr.add(randomSymbol())
+            length--
         }
         if (digits) {
-            arr.add(randomDigit());
-            length--;
+            arr.add(randomDigit())
+            length--
         }
-        arr.add(randomAll(length));
-
-        StringBuilder pass=new StringBuilder();
-        while (arr.size()>0){
-            int i=3%arr.size();
-            pass.append(arr.get(i));
-            arr.remove(i);
+        arr.add(randomAll(length))
+        val pass = StringBuilder()
+        while (arr.size > 0) {
+            val i = 3 % arr.size
+            pass.append(arr[i])
+            arr.removeAt(i)
         }
-        return pass.toString();
+        return pass.toString()
     }
 
-    private static String randomCapital() {
-
-        int r = (int) (Math.random() * 100);
-        r = r % 26;
-        return String.valueOf((char) ('A' + r));
+    private fun randomCapital(): String {
+        var r = (Math.random() * 100).toInt()
+        r = r % 26
+        return ('A'.code + r).toChar().toString()
     }
 
-    private static String randomSmall() {
-        int r = (int) (Math.random() * 100);
-        r = r % 26;
-        return String.valueOf((char) ('a' + r));
+    private fun randomSmall(): String {
+        var r = (Math.random() * 100).toInt()
+        r = r % 26
+        return ('a'.code + r).toChar().toString()
     }
 
-    private static String randomDigit() {
-        int r = (int) (Math.random() * 10);
-        r = r % 10;
-        return String.valueOf(r);
+    private fun randomDigit(): String {
+        var r = (Math.random() * 10).toInt()
+        r = r % 10
+        return r.toString()
     }
 
-    private static String randomSymbol() {
-        int r = (int) (Math.random() * 100);
-        char arr[] = {'@', '#', '$', '%', '=', ':', '?', '.', '/', '|', '~', '>', '*', '(', ')', '<'};
-        r = r % arr.length;
-        return String.valueOf(arr[r]);
+    private fun randomSymbol(): String {
+        var r = (Math.random() * 100).toInt()
+        val arr = charArrayOf('@', '#', '$', '%', '=', ':', '?', '.', '/', '|', '~', '>', '*', '(', ')', '<')
+        r = r % arr.size
+        return arr[r].toString()
     }
 
-    private static String randomAll(int n) {
-        if (n<1) return null;
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < n; ) {
-            int r = (int) (Math.random() * 4);
-            switch (r) {
-                case 0:
-                    if (mCaps) {
-                        sb.append(randomCapital());
-                        i++;
-                    }
-                    break;
-                case 1:
-                    if (mDigits) {
-                        sb.append(randomDigit());
-                        i++;
-                    }
-                    break;
-                case 2:
-                    if (mSmall) {
-                        sb.append(randomSmall());
-                        i++;
-                    }
-                    break;
-                case 3:
-                    if (mSymbols) {
-                        sb.append(randomSymbol());
-                        i++;
-                    }
-                    break;
+    private fun randomAll(n: Int): String? {
+        if (n < 1) return null
+        val sb = StringBuilder()
+        var i = 0
+        while (i < n) {
+            val r = (Math.random() * 4).toInt()
+            when (r) {
+                0 -> if (mCaps) {
+                    sb.append(randomCapital())
+                    i++
+                }
+                1 -> if (mDigits) {
+                    sb.append(randomDigit())
+                    i++
+                }
+                2 -> if (mSmall) {
+                    sb.append(randomSmall())
+                    i++
+                }
+                3 -> if (mSymbols) {
+                    sb.append(randomSymbol())
+                    i++
+                }
             }
         }
-        return sb.toString();
+        return sb.toString()
     }
 }
