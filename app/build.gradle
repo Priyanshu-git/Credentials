@@ -27,6 +27,11 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 
+    buildFeatures {
+        dataBinding true
+    }
+
+
 }
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
@@ -38,8 +43,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.+'
     implementation platform('com.google.firebase:firebase-bom:26.0.0')

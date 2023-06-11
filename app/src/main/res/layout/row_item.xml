@@ -1,83 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/item_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/row_name"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:elevation="4dp">
+        <!--    Show pass & copy pass, copy username, delete, open url-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="4dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="@string/string_name" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/row_url"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="4dp"
-            android:text="TextView"
-            android:textStyle="italic"
-            tools:text="@string/string_username" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/row_pass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="4dp"
-            android:text="@string/string_dummy"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textStyle="bold" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/user_tile"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/tile_background"
+                    android:gravity="center"
+                    android:text="T"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txt_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    app:layout_constraintBottom_toTopOf="@+id/txt_username"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/user_tile"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread"
+                    tools:text="@string/string_title" />
 
-        <Button
-            android:id="@+id/btn_visible"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="56dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center|center_vertical"
-            android:insetTop="0dp"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            app:cornerRadius="50dp"
-            app:icon="@drawable/ic_baseline_visibility_24"
-            app:iconTint="#000000" />
+                <TextView
+                    android:id="@+id/txt_username"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="TextView"
+                    android:textStyle="italic"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/user_tile"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_name"
+                    tools:text="@string/string_username" />
 
-        <Button
-            android:id="@+id/btn_delete_entry"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="56dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center|center_horizontal"
-            android:insetTop="2dp"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            app:cornerRadius="50dp"
-            app:icon="@drawable/ic_baseline_delete_outline_24"
-            app:iconTint="#CA0000" />
+                <!--        <TextView-->
+                <!--            android:id="@+id/row_pass"-->
+                <!--            android:layout_width="match_parent"-->
+                <!--            android:layout_height="wrap_content"-->
+                <!--            android:layout_marginStart="16dp"-->
+                <!--            android:layout_marginBottom="4dp"-->
+                <!--            android:text="@string/string_dummy"-->
+                <!--            android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
+                <!--            android:textStyle="bold" />-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginHorizontal="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/main_layout"
+                android:background="#616161"
+                tools:visibility="visible"
+                android:orientation="horizontal" />
 
-</LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/subMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingVertical="8dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                app:layout_constraintVertical_bias="0.0"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/ll_show_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ll_copy_username"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <ImageView
+                        android:id="@+id/img_show_pass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/ic_baseline_remove_red_eye_24"
+                        app:tint="@color/black" />
+
+                    <TextView
+                        android:id="@+id/txt_show_pass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:maxEms="5"
+                        android:text="Show Password" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_copy_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ll_open_url"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ll_show_pwd"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <ImageView
+                        android:id="@+id/img_copy_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/baseline_content_copy_24"
+                        app:tint="@color/black" />
+
+                    <TextView
+                        android:id="@+id/txt_copy_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:maxEms="5"
+                        android:text="Copy Username" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_open_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ll_delete"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ll_copy_username"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <ImageView
+                        android:id="@+id/img_open_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/outline_open_in_new"
+                        app:tint="@color/black" />
+
+                    <TextView
+                        android:id="@+id/txt_open_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:maxEms="5"
+                        android:text="Open URL" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ll_open_url"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <ImageView
+                        android:id="@+id/img_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/ic_baseline_delete_outline_24"
+                        app:tint="@color/black" />
+
+                    <TextView
+                        android:id="@+id/txt_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:maxEms="5"
+                        android:text="Delete" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

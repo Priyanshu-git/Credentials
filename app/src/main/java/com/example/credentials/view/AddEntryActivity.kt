@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.credentials.R
+import com.example.credentials.util.Constants.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -17,9 +18,7 @@ class AddEntryActivity : AppCompatActivity() {
     private var url: EditText? = null
     private var pass: EditText? = null
     private var db: FirebaseFirestore? = null
-    val KEY_NAME = "NAME"
-    val KEY_URL = "URL"
-    val KEY_PASS = "PASS"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_entry)

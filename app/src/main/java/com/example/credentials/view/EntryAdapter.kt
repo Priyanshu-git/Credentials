@@ -1,43 +1,82 @@
 package com.example.credentials.view
 
 import android.app.AlertDialog
-import android.content.Context
-import android.content.DialogInterface
+import android.content.*
+import android.content.Context.CLIPBOARD_SERVICE
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.credentials.R
 import com.example.credentials.data.model.Entry
+import com.example.credentials.databinding.RowItemBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class EntryAdapter(var dataset: ArrayList<Entry>) : RecyclerView.Adapter<EntryAdapter.ViewHolder>() {
     var mContext: Context? = null
+    var binding: RowItemBinding? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_item, parent, false)
+        binding = RowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         mContext = parent.context
-        return ViewHolder(view)
+        return ViewHolder(binding!!)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.name.text = dataset[position].NAME
-        holder.url.text = dataset[position].URL
-        holder.pass.setText(R.string.string_dummy)
+        holder.username.text = dataset[position].URL
         holder.docID = dataset[position].DOC_ID
-        holder.visible.setOnClickListener { v: View? ->
-            if (mContext!!.getString(R.string.string_dummy).contentEquals(holder.pass.text))
-                holder.pass.text = dataset[position].PASS
-            else
-                holder.pass.setText(R.string.string_dummy)
+        holder.userTile.text = dataset[position].NAME!![0].toString()
+
+        setListeners(holder, position)
+
+    }
+
+    private fun setListeners(holder: ViewHolder, position: Int) {
+        holder.mainLayout.setOnClickListener {
+            if (holder.subMenu.tag == null || holder.subMenu.tag == "hidden") {
+                holder.subMenu.tag = "visible"
+                holder.subMenu.visibility = View.VISIBLE
+                holder.divider.visibility = View.VISIBLE
+            } else {
+                holder.subMenu.tag = "hidden"
+                holder.subMenu.visibility = View.GONE
+                holder.divider.visibility = View.GONE
+            }
         }
-        holder.delete.setOnClickListener { v: View? ->
-            val index = holder.adapterPosition
-            showAlertDialog(index)
+        holder.lCopyUsername.setOnClickListener {
+            // copy username to clipboard
+            val clipboardManager = mContext?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("label", dataset[position].NAME)
+            clipboardManager.setPrimaryClip(clipData)
+            Toast.makeText(mContext, "Username Copied", Toast.LENGTH_SHORT).show()
+        }
+        holder.llOpenUrl.setOnClickListener {
+            // open url in browser
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(dataset[position].URL)
+            mContext?.startActivity(intent)
+        }
+        holder.llShowPwd.setOnClickListener {
+            // show password in dialog
+            val builder = AlertDialog.Builder(mContext)
+            builder.setTitle("Show Password").setMessage(dataset[position].PASS)
+                    .setCancelable(false)
+                    .setPositiveButton("Copy") { dialog: DialogInterface?, which: Int ->
+                        // copy password to clipboard
+                        val clipboardManager = mContext?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                        val clipData = ClipData.newPlainText("label", dataset[position].PASS)
+                        clipboardManager.setPrimaryClip(clipData)
+                        Toast.makeText(mContext, "Password Copied", Toast.LENGTH_SHORT).show()
+                    }
+                    .setNegativeButton("Dismiss") { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            val alert = builder.create()
+            alert.show()
+        }
+        holder.delete.setOnClickListener{
+            showAlertDialog(position)
         }
     }
 
@@ -58,7 +97,7 @@ class EntryAdapter(var dataset: ArrayList<Entry>) : RecyclerView.Adapter<EntryAd
                             }
                             .addOnFailureListener { e: Exception? -> Toast.makeText(mContext, "Error. Please try again", Toast.LENGTH_SHORT).show() }
                 }
-                .setNegativeButton("No") { dialog: DialogInterface, which: Int -> dialog.cancel() }
+                .setNegativeButton("No") { dialog: DialogInterface, _: Int -> dialog.cancel() }
         val alert = builder.create()
         alert.show()
     }
@@ -72,20 +111,22 @@ class EntryAdapter(var dataset: ArrayList<Entry>) : RecyclerView.Adapter<EntryAd
         return dataset.size
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var name: TextView
-        var url: TextView
-        var pass: TextView
-        var docID: String? = ""
-        var delete: Button
-        var visible: Button
+    inner class ViewHolder(itemBinding: RowItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+        val item = itemBinding.itemLayout
+        val mainLayout = itemBinding.mainLayout
+        val divider = itemBinding.divider
+        val subMenu = itemBinding.subMenu
 
-        init {
-            name = itemView.findViewById(R.id.row_name)
-            url = itemView.findViewById(R.id.row_url)
-            pass = itemView.findViewById(R.id.row_pass)
-            delete = itemView.findViewById(R.id.btn_delete_entry)
-            visible = itemView.findViewById(R.id.btn_visible)
-        }
+        val name = itemBinding.txtName
+        val username = itemBinding.txtUsername
+        val userTile = itemBinding.userTile
+
+        val llShowPwd = itemBinding.llShowPwd
+        val lCopyUsername = itemBinding.llCopyUsername
+        val llOpenUrl = itemBinding.llOpenUrl
+        val delete = itemBinding.llDelete
+
+        var docID: String? = ""
+
     }
 }
